@@ -8,6 +8,7 @@ function createSaveBtn(input, todo) {
   saveBtn.textContent = "Save";
   saveBtn.style.cursor = "pointer";
   saveBtn.style.marginLeft = "10px";
+  saveBtn.className = "todo-save-btn";
   saveBtn.addEventListener("click", async (e) => {
     e.preventDefault();
     const newTask = input.value.trim();
@@ -32,6 +33,7 @@ function createCancelBtn(li, todo, todos) {
   cancelBtn.textContent = "Cancel";
   cancelBtn.style.cursor = "pointer";
   cancelBtn.style.marginLeft = "10px";
+  cancelBtn.className = "todo-cancel-btn";
 
   cancelBtn.addEventListener("click", () => {
     generateLiContent(li, todo, todos);
@@ -45,19 +47,52 @@ function createEditBtn(li, todo, todos) {
   editBtn.textContent = "Edit";
   editBtn.style.marginLeft = "10px";
   editBtn.style.cursor = "pointer";
+  editBtn.className = "todo-edit-btn";
   editBtn.addEventListener("click", () => editTodo(li, todo, todos));
 
   return editBtn;
 }
 
-function generateLiContent(li, todo, todos) {
+function createDeleteBtn(li, todo) {
+  const deleteBtn = document.createElement("span");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.style.marginLeft = "10px";
+  deleteBtn.style.cursor = "pointer";
+  deleteBtn.className = "todo-delete-btn";
+  deleteBtn.addEventListener("click", () => deleteTodo(li, todo));
+
+  return deleteBtn;
+}
+
+function generateLiContent(li, todo, todos, editMode = false) {
   li.innerHTML = "";
+  li.className = "todo-task";
 
   const textNode = document.createTextNode(todo.task);
-  const editBtn = createEditBtn(li, todo, todos);
 
-  li.appendChild(textNode);
-  li.appendChild(editBtn);
+  const actionsWrapper = document.createElement("span");
+  actionsWrapper.className = "actions-wrapper";
+
+  if (editMode) {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = todo.task;
+    input.className = "todo-edit-input";
+    const saveBtn = createSaveBtn(input, todo);
+    const cancelBtn = createCancelBtn(li, todo, todos);
+
+    li.appendChild(input);
+    actionsWrapper.appendChild(saveBtn);
+    actionsWrapper.appendChild(cancelBtn);
+  } else {
+    const editBtn = createEditBtn(li, todo, todos);
+    const deleteBtn = createDeleteBtn(li, todo, todos);
+
+    li.appendChild(textNode);
+    actionsWrapper.appendChild(editBtn);
+    actionsWrapper.appendChild(deleteBtn);
+  }
+  li.appendChild(actionsWrapper);
 
   return li;
 }
@@ -110,20 +145,23 @@ function resetLis(li, todos) {
 }
 
 function editTodo(li, todo, todos) {
-  console.log("todos", todos);
   resetLis(li, todos);
-  const input = document.createElement("input");
-  input.type = "text";
-  input.value = todo.task;
+  generateLiContent(li, todo, todos, true);
+}
 
-  li.innerHTML = "";
+async function deleteTodo(li, todo, todos) {
+  const canDelete = confirm("Are you sure you want to delete this task?");
+  if (!canDelete) return;
 
-  const saveBtn = createSaveBtn(input, todo);
-  const cancelBtn = createCancelBtn(li, todo, todos);
+  try {
+    await fetch(`${baseURL}/todos/${todo._id}`, {
+      method: "DELETE",
+    });
 
-  li.appendChild(input);
-  li.appendChild(saveBtn);
-  li.appendChild(cancelBtn);
+    li.remove();
+  } catch (e) {
+    console.error("Failed to delete todo", e);
+  }
 }
 
 fetchTodos();

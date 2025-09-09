@@ -67,5 +67,20 @@ app.put("/todos/:id", async (req, res) => {
   }
 });
 
+// Delete /todos
+app.delete("/todos/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await Todo.findByIdAndDelete(id);
+
+    const todos = await Todo.find();
+    res.json(todos);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to delete todo" });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => console.log("Server running on port 3000"));

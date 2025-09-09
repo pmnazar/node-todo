@@ -70,3 +70,77 @@ button:hover {
   text-decoration: line-through;
   color: #888;
 }
+
+li.todo-task {
+  display: flex; /* Horizontal alignment */
+  align-items: center; /* Vertically center content */
+  justify-content: space-between; /* Push text to left, buttons to right */
+  padding: 6px 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+/* Buttons inside li.todo-task */
+li.todo-task span {
+  margin-left: 6px;
+  padding: 4px 8px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* Specific button styles */
+li.todo-task .todo-save-btn {
+  background-color: #4caf50;
+  color: white;
+  border: 1px solid #4caf50;
+}
+li.todo-task .todo-save-btn:hover {
+  background-color: #45a049;
+}
+
+li.todo-task .todo-cancel-btn {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+li.todo-task .todo-cancel-btn:hover {
+  background-color: #e0e0e0;
+}
+
+li.todo-task .todo-edit-btn {
+  background-color: #2196f3;
+  color: white;
+  border: 1px solid #2196f3;
+}
+li.todo-task .todo-edit-btn:hover {
+  background-color: #1976d2;
+}
+
+li.todo-task .todo-delete-btn {
+  background-color: #f44336;
+  color: white;
+  border: 1px solid #f44336;
+}
+li.todo-task .todo-delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Style for the input when editing a todo */
+.todo-edit-input {
+  flex-grow: 1;
+  padding: 4px 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  margin-right: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.todo-edit-input:focus {
+  border-color: #2196f3;
+  box-shadow: 0 0 3px rgba(33, 150, 243, 0.5);
+}
