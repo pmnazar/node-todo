@@ -1,7 +1,7 @@
-# 📝 Todos App
+# 📝 Todo App (Vanilla JS + Express + MongoDB)
 
-Simple **Todo application** built with **Node.js, Express, MongoDB (Mongoose)** on the backend and **Vanilla JavaScript** on the frontend.  
-This project is created as a **pet project** for interview preparation and to demonstrate skills in building a full-stack application.
+This is a simple **Todo App** built with **Vanilla JavaScript** on the frontend, **Express** for the backend, and **MongoDB** for data persistence.
+It's a **pet project** for learning and **interview practice**.
 
 ---
 
@@ -11,118 +11,94 @@ This project is created as a **pet project** for interview preparation and to de
 - List all todos
 - Edit existing todos
 - Cancel edit mode
+- Delete todos
 - Persist data with MongoDB
 - Minimalistic UI with Vanilla JS
+- Auto-refresh frontend on changes with LiveReload
 
 ---
 
-## 🛠️ Tech Stack
-
-**Backend:**
-
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose ODM
-
-**Frontend:**
-
-- HTML5
-- CSS3
-- Vanilla JavaScript (Fetch API)
-
----
-
-## 📂 Project Structure
+## 🗂️ Project Structure
 
 ```
-.
-├── http-server/        # Express server files
-├── mongose/            # Mongoose setup and backend logic
-├── public/             # Frontend (HTML, CSS, JS)
-│   ├── index.html
-│   ├── main.js
-│   └── style.css
-└── README.md
+project/
+├─ server.js              # Main Express server
+├─ routes/
+│  └─ todos.js            # Todos API routes (GET, POST, PUT, DELETE)
+├─ models/
+│  └─ Todo.js             # Mongoose Todo schema
+├─ public/                # Frontend files
+│  ├─ index.html
+│  ├─ main.js
+│  └─ style.css
 ```
 
 ---
 
-## ⚙️ Installation & Running
+## ⚙️ Installation
 
-### 1. Clone repository
+1. Clone the repository:
 
 ```bash
-git clone git@github.com:your-username/todos-app.git
-cd todos-app
+git clone https://github.com/pmnazar/node-todo.git
+cd node-todo
 ```
 
-### 2. Install dependencies
+2. Install dependencies:
 
 ```bash
 npm install
 ```
 
-### 3. Start MongoDB
-
-If you installed MongoDB locally:
+3. Start MongoDB locally (using `mongod` or Docker):
 
 ```bash
 mongod --config /usr/local/etc/mongod.conf
-```
-
-Or run with Docker:
-
-```bash
+# or with Docker
 docker run -d -p 27017:27017 --name mongodb mongo
 ```
 
-### 4. Run backend
+4. Start the server with LiveReload:
 
 ```bash
-nodemon ./mongose/app.js
+node server.js
 ```
 
-### 5. Open frontend
-
-Just open `public/index.html` in your browser.
-
----
-
-## 🔗 API Endpoints
-
-### Get all todos
+5. Open the frontend in the browser:
 
 ```
-GET /todos
-```
-
-### Add new todo
-
-```
-POST /todos
-Body: { "task": "Learn Node.js" }
-```
-
-### Update todo by id
-
-```
-PUT /todos/:id
-Body: { "task": "Updated task text" }
+http://localhost:3000
 ```
 
 ---
 
-## 🧑‍💻 Author
+## 🛠️ Usage
 
-**Your Name**
-
-- GitHub: [pmnazar](https://github.com/pmnazar)
-- LinkedIn: [pmnazar](https://www.linkedin.com/in/pmnazar/)
+- Add a new todo using the input form.
+- Edit a todo by clicking **Edit**, modify text, and click **Save**.
+- Cancel edit mode using **Cancel** button.
+- Delete a todo by clicking **Delete**.
+- All changes are persisted in **MongoDB**.
 
 ---
 
-## 📌 Notes
+## 💻 Tech Stack
 
-- Project is made for **educational and interview purposes**.
-- Not production-ready but demonstrates **backend + frontend integration, CRUD, MongoDB usage, and clean code style**.
+- Frontend: Vanilla JavaScript, HTML, CSS
+- Backend: Node.js, Express
+- Database: MongoDB, Mongoose
+- Tools: LiveReload for frontend auto-refresh
+
+---
+
+## 📝 Notes
+
+- This is a pet project for **learning purposes** and **interview preparation**.
+- The project demonstrates **CRUD operations**, **frontend-backend interaction**, and **minimalistic UI design**.
+
+---
+
+## 🔗 Links
+
+- MongoDB: [https://www.mongodb.com/](https://www.mongodb.com/)
+- Express: [https://expressjs.com/](https://expressjs.com/)
