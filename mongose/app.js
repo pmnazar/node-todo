@@ -45,10 +45,27 @@ app.post("/todos", async (req, res) => {
 });
 
 // PUT /todos
-// app.put("/todos/:id", async (req, res) => {
-//   console.log("req", req);
-//   // const todo = new Todo()
-// });
+app.put("/todos/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { task } = req.body;
+
+    const updateTodo = await Todo.findByIdAndUpdate(
+      id,
+      { task },
+      { new: true }
+    );
+
+    if (!updateTodo) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+
+    res.json(updateTodo);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to update todo" });
+  }
+});
 
 const PORT = 3000;
 app.listen(PORT, () => console.log("Server running on port 3000"));

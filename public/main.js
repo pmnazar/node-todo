@@ -3,15 +3,24 @@ const taskInput = document.getElementById("task");
 const todosList = document.getElementById("todo-list");
 const baseURL = "http://localhost:3000";
 
-function createSaveBtn(input) {
+function createSaveBtn(input, todo) {
   const saveBtn = document.createElement("span");
   saveBtn.textContent = "Save";
   saveBtn.style.cursor = "pointer";
   saveBtn.style.marginLeft = "10px";
-  saveBtn.addEventListener("click", (e) => {
+  saveBtn.addEventListener("click", async (e) => {
     e.preventDefault();
+    const newTask = input.value.trim();
 
-    console.log("input", input.value);
+    if (!newTask) return;
+
+    await fetch(`${baseURL}/todos/${todo._id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ task: newTask }),
+    });
+
+    fetchTodos();
   });
 
   return saveBtn;
@@ -19,9 +28,10 @@ function createSaveBtn(input) {
 
 function createCancelBtn(li, todo, todos) {
   const cancelBtn = document.createElement("span");
+
   cancelBtn.textContent = "Cancel";
   cancelBtn.style.cursor = "pointer";
-  cancelBtn.style.margenLeft = "10px";
+  cancelBtn.style.marginLeft = "10px";
 
   cancelBtn.addEventListener("click", () => {
     generateLiContent(li, todo, todos);
@@ -36,6 +46,8 @@ function createEditBtn(li, todo, todos) {
   editBtn.style.marginLeft = "10px";
   editBtn.style.cursor = "pointer";
   editBtn.addEventListener("click", () => editTodo(li, todo, todos));
+
+  return editBtn;
 }
 
 function generateLiContent(li, todo, todos) {
@@ -104,11 +116,10 @@ function editTodo(li, todo, todos) {
   input.type = "text";
   input.value = todo.task;
 
-  const saveBtn = createSaveBtn(input);
-
-  const cancelBtn = createCancelBtn(li, todo, todos);
-
   li.innerHTML = "";
+
+  const saveBtn = createSaveBtn(input, todo);
+  const cancelBtn = createCancelBtn(li, todo, todos);
 
   li.appendChild(input);
   li.appendChild(saveBtn);
