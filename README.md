@@ -22,15 +22,19 @@ It's a **pet project** for learning, experimenting, and **interview practice**.
 
 ```
 project/
-├─ server.js              # Main Express server with LiveReload
+├─ server.js # Main Express server with LiveReload
 ├─ routes/
-│  └─ todos.js            # Todos API routes (GET, POST, PUT, DELETE)
+│ ├─ auth.js # Auth API routes (register, login)
+│ └─ todos.js # Todos API routes (GET, POST, PUT, DELETE)
+├─ middleware/
+│ └─ auth.js # JWT authentication middleware
 ├─ models/
-│  └─ Todo.js             # Mongoose Todo schema
-├─ public/                # Frontend files
-│  ├─ index.html
-│  ├─ main.js
-│  └─ style.css
+│ ├─ User.js # Mongoose User schema
+│ └─ Todo.js # Mongoose Todo schema
+├─ public/ # Frontend files
+├─ .env # Environment variables (JWT_SECRET, MONGO_URI, PORT)
+├─ package.json
+└─ README.md
 ```
 
 ---
@@ -68,18 +72,26 @@ docker run -d -p 27017:27017 --name mongodb mongo
 node server.js
 ```
 
-2. **Open the frontend in the browser**:
+2. **Create .env file**:
+
+```
+PORT=3000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+```
+
+3. **Open the frontend in the browser**:
 
 ```
 http://localhost:3000
 ```
 
-3. **Automatic behavior**:
+4. **Automatic behavior**:
 
-- Frontend changes (`index.html`, `main.js`, `style.css`) → **browser auto-refreshes**
+- Frontend changes (`index.html`, `index.js`, `style.css`) → **browser auto-refreshes**
 - Backend changes (Express routes, server logic) → **server restarts** if using `nodemon`
 
-4. **Optional: Use nodemon for backend + LiveReload for frontend**:
+5. **Optional: Use nodemon for backend + LiveReload for frontend**:
 
 ```bash
 npx nodemon server.js
@@ -93,12 +105,12 @@ npx nodemon server.js
 
 ## 🛠️ Usage
 
-- Add a new todo using the input form.
-- Edit a todo by clicking **Edit**, modify text, and click **Save**.
-- Cancel edit mode using **Cancel** button.
-- Delete a todo by clicking **Delete**.
-- All changes are persisted in **MongoDB**.
-- Frontend automatically reloads when you edit **HTML, JS, or CSS files**.
+- User authentication with JWT
+- Todos bound to logged-in user
+- CRUD operations for tasks (Create, Read, Update, Delete)
+- Frontend fetches tasks via API
+- Styled task list with edit/delete buttons
+- LiveReload for frontend development
 
 ---
 
