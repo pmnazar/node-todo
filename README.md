@@ -14,7 +14,9 @@ It's a **pet project** for learning, experimenting, and **interview practice**.
 - Delete todos
 - Persist data with MongoDB
 - Minimalistic UI with Vanilla JS
-- **Auto-refresh frontend on changes with LiveReload**
+- Auto-refresh frontend on changes with LiveReload
+- User authentication with JWT
+- Todos are bound to the logged-in user
 
 ---
 
