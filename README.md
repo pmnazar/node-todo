@@ -3,6 +3,8 @@
 This is a simple **Todo App** built with **Vanilla JavaScript** on the frontend, **Express** for the backend, and **MongoDB** for data persistence.
 It's a **pet project** for learning, experimenting, and **interview practice**.
 
+This README explains the project structure, setup instructions, usage, and testing.
+
 ---
 
 ## 🚀 Features
@@ -41,8 +43,10 @@ project/
 ├─ .gitignore                # Files to ignore in Git
 ├─ .editorconfig             # Editor configuration for consistent coding style
 ├─ package.json
-└─ README.md
+└─ README.md                 # Project documentation (this file)
 ```
+
+This structure helps organize backend, frontend, tests, and configuration files clearly.
 
 ---
 
@@ -119,6 +123,8 @@ npx nodemon server.js
 - Styled task list with edit/delete buttons
 - LiveReload for frontend development
 
+**Live demo:** [https://node-todo-jt90.onrender.com/](https://node-todo-jt90.onrender.com/)
+
 ---
 
 ## 🧪 Testing
@@ -157,3 +163,4 @@ npm test
 
 - MongoDB: [https://www.mongodb.com/](https://www.mongodb.com/)
 - Express: [https://expressjs.com/](https://expressjs.com/)
+- Live Demo: [https://node-todo-jt90.onrender.com/](https://node-todo-jt90.onrender.com/)
