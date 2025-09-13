@@ -7,6 +7,12 @@ export default function renderTodoItem(todo, onSave, onDeleted) {
   li.className = "todo-task";
   li.dataset.id = todo._id;
 
+  // checkbox
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = !!todo.completed;
+  checkbox.className = "task-checkbox";
+
   // label
   const label = document.createElement("span");
   label.className = "task-text";
@@ -16,6 +22,25 @@ export default function renderTodoItem(todo, onSave, onDeleted) {
   // actions
   const actions = document.createElement("div");
   actions.className = "actions";
+
+  //toggle completion
+  checkbox.addEventListener("change", async () => {
+    try {
+      const updated = onSave(todo._id, todo.task, checkbox.checked);
+
+      todo.completed = updated.completed;
+
+      if (todo.completed) {
+        label.classList.add("completed");
+      } else {
+        label.classList.remove("completed");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("❌ Could not update completion");
+      checkbox.checked = !!todo.completed;
+    }
+  });
 
   // Normal mode
   function renderNormalActions() {
@@ -92,6 +117,7 @@ export default function renderTodoItem(todo, onSave, onDeleted) {
     }
   }
 
+  li.appendChild(checkbox);
   li.appendChild(label);
   li.appendChild(actions);
   renderNormalActions();

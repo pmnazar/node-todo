@@ -37,12 +37,12 @@ export function setupEvents() {
         todosList.appendChild(
           renderTodoItem(
             todo,
-            async (id, task) => {
+            async (id, task, completed) => {
               const url = `${BASE_URL}/api/todos/${id}`;
               const res = await fetch(url, {
                 method: "PUT",
                 headers: getAuthHeaders(),
-                body: JSON.stringify({ task, user: todo.user }),
+                body: JSON.stringify({ task, user: todo.user, completed }),
               });
 
               if (!res.ok) throw new Error("Failed to save");

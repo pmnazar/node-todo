@@ -21,7 +21,11 @@ router.post("/", async (req, res) => {
     return res.status(401).json({ error: "Unauthorize" });
 
   try {
-    const todo = new Todo({ task: req.body.task, user: req.user.id });
+    const todo = new Todo({
+      task: req.body.task,
+      user: req.user.id,
+      completed: req.body.completed,
+    });
     await todo.save();
 
     const todos = await Todo.find({ user: req.user.id });
@@ -36,8 +40,12 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { task } = req.body;
-    const updated = await Todo.findByIdAndUpdate(id, { task }, { new: true });
+    const { task, completed } = req.body;
+    const updated = await Todo.findByIdAndUpdate(
+      id,
+      { task, completed },
+      { new: true }
+    );
     if (!updated) return res.status(404).json({ error: "Todo not found" });
     res.json(updated);
   } catch (e) {
