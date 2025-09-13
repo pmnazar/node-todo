@@ -1,24 +1,6 @@
 import { BASE_URL } from "../../../config.js";
 import { navigate } from "../../index.js";
 
-export default function LoginPage() {
-  return `
-    <div id="auth-page">
-        <h2>Login</h2>
-        <form id="login-form">
-            <input type="text" id="username" placeholder="Username" required />
-            <input type="password" id="password" placeholder="Password" required />
-            <button type="submit">Login</button>
-        </form>
-        <p>
-            Don’t have an account?
-            <a href="register" data-link id="show">Register here</a>
-        </p>
-
-    </div>
-    `;
-}
-
 export function setupEvents() {
   const form = document.getElementById("login-form");
 
@@ -41,8 +23,6 @@ export function setupEvents() {
         alert(`❌ Login failed: ${data.message}`);
         return;
       }
-
-      console.log("Login success, token:", data.token);
 
       // Optional: store token in localStorage
       localStorage.setItem("token", data.token);

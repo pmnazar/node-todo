@@ -104,7 +104,7 @@
   word-break: break-word;
 }
 
-.actions button {
+.actions button.btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -119,21 +119,25 @@
   transform: scale(1.1);
 }
 
-.edit-btn {
+.edit,
+.save {
   color: #2e7d32;
   background-color: #e8f5e9;
 }
 
-.edit-btn:hover {
+.edit:hover,
+.save:hover {
   background-color: #c8e6c9;
 }
 
-.delete-btn {
+.delete,
+.cancel {
   color: #c62828;
   background-color: #ffebee;
 }
 
-.delete-btn:hover {
+.delete:hover,
+.cancel:hover {
   background-color: #ffcdd2;
 }
 

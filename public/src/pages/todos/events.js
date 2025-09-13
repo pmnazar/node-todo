@@ -1,24 +1,8 @@
 import { BASE_URL } from "../../../config.js";
-import { navigate } from "../../index.js";
 import getAuthHeaders from "../../../helpers/get-auth-headers.js";
-import escapeHtml from "../../../helpers/escape-html.js";
-
-export default function TodosPage() {
-  return `
-   <div id="todos-page">
-      <h2>My Todos</h2>
-
-      <form id="todo-form">
-        <input type="text" id="task" placeholder="New task" required />
-        <button type="submit">Add</button>
-      </form>
-
-      <ul id="todos-list"></ul>
-
-      <button id="logout-btn">Logout</button>
-    </div>
-  `;
-}
+import { navigate } from "../../index.js";
+import { createBtn } from "./helpers.js";
+import renderTodoItem from "./todo-item.js";
 
 export function setupEvents() {
   const todoForm = document.getElementById("todo-form");
@@ -41,25 +25,49 @@ export function setupEvents() {
       });
 
       if (!res.ok) {
+        navigate("login");
         todosList.innerHTML = "<li>Unable to fetch (not authenticated?)</li>";
         return;
       }
 
       const data = await res.json();
 
-      todosList.innerHTML = data
-        .map((t) => {
-          return `
-          <li class="todo-task" data-id="${t._id}">
-            <span class="task-text">${escapeHtml(t.task)}</span>
-            <div class="actions">
-              <button class="edit-btn">Edit</button>
-              <button class="delete-btn">Delete</button>
-            </div>
-          </li>
-        `;
-        })
-        .join("");
+      todosList.innerHTML = "";
+      data.forEach((todo) => {
+        todosList.appendChild(
+          renderTodoItem(
+            todo,
+            async (id, task) => {
+              const url = `${BASE_URL}/api/todos/${id}`;
+              const res = await fetch(url, {
+                method: "PUT",
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ task, user: todo.user }),
+              });
+
+              if (!res.ok) throw new Error("Failed to save");
+
+              return await res.json();
+            },
+            async (id, task) => {
+              const confirmed = confirm(
+                `Are you sure you want to delete the task "${task}"?`
+              );
+
+              if (confirmed) {
+                const url = `${BASE_URL}/api/todos/${id}`;
+                const res = await fetch(url, {
+                  method: "DELETE",
+                  headers: getAuthHeaders(),
+                });
+
+                if (!res.ok) throw new Error("Falide to delete");
+                fetchTodos();
+              }
+            }
+          )
+        );
+      });
     } catch (e) {
       console.error(e);
       alert("❌ Could not fetch todos");
