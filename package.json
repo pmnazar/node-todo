@@ -4,7 +4,8 @@
   "description": "Pet project",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "start": "node server.js"
   },
   "type": "module",
@@ -16,10 +17,14 @@
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.18.1"
+    "mongoose": "^8.18.1",
+    "vitest": "^3.2.4"
   },
   "devDependencies": {
+    "@types/supertest": "^6.0.3",
+    "mongodb-memory-server": "^10.2.0",
     "nodemon": "^3.1.10",
-    "reload": "^3.4.2"
+    "reload": "^3.4.2",
+    "supertest": "^7.1.4"
   }
 }

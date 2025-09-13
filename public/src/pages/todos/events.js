@@ -1,7 +1,6 @@
 import { BASE_URL } from "../../../config.js";
 import getAuthHeaders from "../../../helpers/get-auth-headers.js";
 import { navigate } from "../../index.js";
-import { createBtn } from "./helpers.js";
 import renderTodoItem from "./todo-item.js";
 
 export function setupEvents() {
