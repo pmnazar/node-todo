@@ -1,6 +1,7 @@
 # 📝 Todo App (Angular + Express + MongoDB)
 
-This is a simple **Todo App** built with **Angular** on the frontend, **Express** for the backend, and **MongoDB** for data persistence. It's a **pet project** for learning, experimenting, and **interview practice**.
+This is a simple Todo App built with Angular on the frontend, Express for the backend, and MongoDB for data persistence.  
+It's a pet project for learning, experimenting, and interview practice.
 
 This README explains the project structure, setup instructions, usage, and testing.
 
@@ -57,7 +58,7 @@ cd backend
 npm install
 ```
 
-Start MongoDB locally (using `mongod` or Docker):
+Start MongoDB locally (using mongod or Docker):
 
 ```bash
 mongod --config /usr/local/etc/mongod.conf
@@ -124,10 +125,10 @@ npm test
 
 ## 💻 Tech Stack
 
-- Frontend: Angular, TypeScript, HTML, CSS
-- Backend: Node.js, Express
-- Database: MongoDB, Mongoose
-- Testing: Vitest, Supertest, MongoMemoryServer
+- **Frontend:** Angular, TypeScript, HTML, CSS
+- **Backend:** Node.js, Express
+- **Database:** MongoDB, Mongoose
+- **Testing:** Vitest, Supertest, MongoMemoryServer
 
 ---
 
@@ -136,3 +137,4 @@ npm test
 - MongoDB: [https://www.mongodb.com/](https://www.mongodb.com/)
 - Angular: [https://angular.io/](https://angular.io/)
 - Express: [https://expressjs.com/](https://expressjs.com/)
+- **Live Demo:** [https://node-todo-frontend.onrender.com/](https://node-todo-frontend.onrender.com/)
