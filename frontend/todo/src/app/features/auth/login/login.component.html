@@ -1,36 +1,52 @@
-<div class="login-form-container">
-  <h2 class="login-title">Login</h2>
+<div
+  class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4"
+>
+  <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
+    <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
-    <mat-form-field appearance="outline" class="login-field">
-      <mat-label>Username</mat-label>
-      <input matInput formControlName="username" />
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+      <!-- Username -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" class="px-3 py-2" />
+        @if (form.controls.username.hasError("required")) {
+          <mat-error>Required</mat-error>
+        }
+      </mat-form-field>
 
-      @if (form.controls.username.hasError("required")) {
-        <mat-error> Required </mat-error>
-      }
-    </mat-form-field>
+      <!-- Password -->
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          class="px-3 py-2 rounded"
+        />
+        @if (form.controls.password.hasError("required")) {
+          <mat-error>Required</mat-error>
+        }
+      </mat-form-field>
 
-    <mat-form-field appearance="outline" class="login-field">
-      <mat-label>Password</mat-label>
-      <input matInput type="password" formControlName="password" />
-      @if (form.controls.password.hasError("required")) {
-        <mat-error> Required </mat-error>
-      }
-    </mat-form-field>
+      <!-- Button -->
+      <button
+        mat-raised-button
+        color="primary"
+        class="w-full py-2 rounded font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+        [disabled]="form.invalid"
+      >
+        Login
+      </button>
 
-    <button
-      mat-raised-button
-      color="primary"
-      class="login-button"
-      [disabled]="form.invalid"
-    >
-      Login
-    </button>
-
-    <p class="login-footer">
-      Don't have an account?
-      <a routerLink="/register">Register</a>
-    </p>
-  </form>
+      <!-- Footer -->
+      <p class="text-center text-gray-600 text-sm mt-4">
+        Don't have an account?
+        <a
+          routerLink="/register"
+          class="text-blue-600 hover:underline cursor-pointer"
+          >Register</a
+        >
+      </p>
+    </form>
+  </div>
 </div>

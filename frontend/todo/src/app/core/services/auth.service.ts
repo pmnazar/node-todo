@@ -10,6 +10,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  register(username: string, email: string, password: string): Observable<any> {
+    const url = `${this.baseURL}/register`;
+    return this.http.post(url, { username, email, password });
+  }
+
   login(username: string, password: string): Observable<{ token: string }> {
     const url = `${this.baseURL}/login`;
 
@@ -18,7 +23,7 @@ export class AuthService {
         next: (res) => {
           localStorage.setItem('token', res.token);
         },
-      })
+      }),
     );
   }
 

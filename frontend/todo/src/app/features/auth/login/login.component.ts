@@ -10,11 +10,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../../core/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   imports: [
+    RouterModule,
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
@@ -33,7 +34,10 @@ export class LoginComponent {
     password: new FormControl(null, [Validators.required]),
   });
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   onSubmit() {
     if (this.form.valid) {
