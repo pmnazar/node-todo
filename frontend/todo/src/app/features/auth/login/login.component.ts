@@ -1,0 +1,51 @@
+import { Component } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../../../core/services/auth.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
+  ],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
+})
+export class LoginComponent {
+  form = new FormGroup<{
+    username: FormControl<string | null>;
+    password: FormControl<string | null>;
+  }>({
+    username: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [Validators.required]),
+  });
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  onSubmit() {
+    if (this.form.valid) {
+      const username = this.form.value.username!;
+      const password = this.form.value.password!;
+      this.authService.login(username, password).subscribe({
+        next: (res) => {
+          if (res?.token) {
+            this.router.navigate(['/todos']);
+          }
+        },
+      });
+    }
+  }
+}

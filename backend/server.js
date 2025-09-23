@@ -14,9 +14,9 @@ const app = express();
 const PORT = process.env.PORT;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const watchDir = path.join(__dirname, "public");
+const watchDir = path.join(__dirname, "../frontend/todo/dist/todo");
 
-app.use(cors());
+app.use(cors({ origini: "http://localhost:4200" }));
 app.use(express.json());
 
 // Serve frontend
