@@ -8,9 +8,9 @@ const router = express.Router();
 // Register
 router.post("/register", async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, email, password } = req.body;
     const hashed = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: hashed });
+    const user = new User({ username, password: hashed, email });
     await user.save();
     res.json({ message: "User registered successfull" });
   } catch (e) {
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       { id: user._id, username: user.username },
       JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1h" },
     );
 
     res.json({ token });
