@@ -1,3 +1,4 @@
 node_modules/
-.env
+frontend/todo/node_modules
+frontend/todo/dist
 *.log
