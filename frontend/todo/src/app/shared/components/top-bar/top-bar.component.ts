@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-top-bar',
