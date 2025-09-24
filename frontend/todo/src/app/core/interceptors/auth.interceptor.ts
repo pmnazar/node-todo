@@ -14,9 +14,15 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
 
+  const retryCount = Number(req.headers.get('x-refresh-count') || '0');
+
   return next(authReq).pipe(
     catchError((err) => {
-      if (err.status === 401 && !req.headers.has('x-refresh-attempt')) {
+      if (
+        err.status === 401 &&
+        !req.headers.has('x-refresh-attempt') &&
+        retryCount < 3
+      ) {
         return authService.refreshToken().pipe(
           switchMap((newToken) => {
             authService.token = newToken;
