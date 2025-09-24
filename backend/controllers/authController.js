@@ -6,6 +6,7 @@ import {
   revokeRefreshToken,
   verifyRefreshToken,
 } from "../services/tokenServices.js";
+const isProd = process.env.NODE_ENV === "production";
 
 export const registerUser = async (req, res) => {
   try {
@@ -34,7 +35,12 @@ export const loginUser = async (req, res) => {
     const accessToken = generateAccessToken(user);
     const refreshToken = await generateRefreshToken(user);
 
-    res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: false });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: isProd ? "node" : "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.json({ accessToken });
   } catch (e) {
@@ -69,8 +75,8 @@ export const logoutUser = async (req, res) => {
 
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      secure: false, // true in production with HTTPS
-      sameSite: "strict",
+      secure: isProd,
+      sameSite: isProd ? "node" : "strict",
     });
 
     res.sendStatus(204);
