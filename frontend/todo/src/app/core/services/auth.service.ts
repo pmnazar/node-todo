@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
   private baseURL = `${environment.apiUrl}/api/auth`;
   private _isLoggedIn = new BehaviorSubject<boolean>(
-    !!localStorage.getItem('token'),
+    !!localStorage.getItem('accessToken'),
   );
   isLoggedIn$ = this._isLoggedIn.asObservable();
   set isLoggedIn(v: boolean) {
@@ -37,7 +37,7 @@ export class AuthService {
       .pipe(
         tap({
           next: (res) => {
-            localStorage.setItem('token', res.accessToken);
+            localStorage.setItem('accessToken', res.accessToken);
             this.isLoggedIn = true;
           },
         }),
