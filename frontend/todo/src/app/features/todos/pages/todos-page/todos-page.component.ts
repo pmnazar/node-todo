@@ -51,7 +51,9 @@ export class TodosPageComponent implements OnInit {
     });
   }
 
-  toggle(todo: Todo) {}
+  toggle(todo: Todo) {
+    console.log(todo);
+  }
 
   startEdit(todo: Todo) {
     if (todo?._id) {

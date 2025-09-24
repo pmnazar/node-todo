@@ -16,6 +16,9 @@ export async function authMiddleware(req, res, next) {
     req.user = user; // attach user info to request
     next();
   } catch (e) {
+    if (e.name === "TokenExpiredError") {
+      return res.status(401).json({ message: "Token expired" });
+    }
     return res.status(403).json({ message: "Invalid token" });
   }
 }
