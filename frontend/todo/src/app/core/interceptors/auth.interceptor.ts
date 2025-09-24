@@ -12,17 +12,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     authReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`),
     });
+  } else {
+    authReq = req.clone({ withCredentials: true });
   }
-
-  const retryCount = Number(req.headers.get('x-refresh-count') || '0');
 
   return next(authReq).pipe(
     catchError((err) => {
-      if (
-        err.status === 401 &&
-        !req.headers.has('x-refresh-attempt') &&
-        retryCount < 3
-      ) {
+      if (err.status === 401 && !req.headers.has('x-refresh-attempt')) {
         return authService.refreshToken().pipe(
           switchMap((newToken) => {
             authService.token = newToken;
