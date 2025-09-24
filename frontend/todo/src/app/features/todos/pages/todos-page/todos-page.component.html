@@ -1,4 +1,4 @@
-<section class="max-w-xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow">
+<section class="max-w-xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
   <!-- Add new todo -->
   <form (ngSubmit)="addTodo()" class="flex gap-2 mb-6" #todoForm="ngForm">
     <input
@@ -7,12 +7,12 @@
       [(ngModel)]="newTodoTitle"
       required
       placeholder="What needs to be done?"
-      class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      class="flex-1 px-4 py-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
     />
     <button
       type="submit"
       [disabled]="!newTodoTitle?.trim()"
-      class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 cursor-pointer"
+      class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
     >
       Add
     </button>
@@ -23,7 +23,7 @@
     <ul class="space-y-3">
       @for (todo of todos$ | async; track todo._id) {
         <li
-          class="flex items-center justify-between p-3 border rounded-lg"
+          class="flex items-center justify-between p-3 border-b border-gray-200 transition-colors"
           [class.bg-gray-100]="todo.completed"
         >
           <!-- Left side: checkbox + title -->
@@ -40,14 +40,14 @@
               <input
                 [(ngModel)]="editingTitle"
                 name="edit-{{ todo._id }}"
-                class="flex-1 px-2 py-1 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                class="flex-1 px-2 py-1 border-b-2 border-blue-400 focus:outline-none focus:border-blue-500 transition-colors"
                 (keyup.enter)="saveEdit(todo, editingTitle)"
                 (keyup.escape)="cancelEdit()"
               />
             } @else {
               <!-- Display mode -->
               <span
-                class="flex-1"
+                class="flex-1 border-b-2 border-transparent hover:border-blue-400 cursor-pointer transition-colors"
                 [class.line-through]="todo.completed"
                 (dblclick)="startEdit(todo)"
               >
@@ -68,14 +68,14 @@
 
               <button
                 (click)="cancelEdit()"
-                class="px-2 py-1 text-sm text-gray-600 hover:underline"
+                class="px-2 py-1 text-sm text-gray-600 hover:underline cursor-pointer"
               >
                 Cancel
               </button>
             } @else {
               <button
                 (click)="startEdit(todo)"
-                class="px-2 py-1 text-sm text-blue-600 hover:underline"
+                class="px-2 py-1 text-sm text-blue-600 hover:underline cursor-pointer"
               >
                 Edit
               </button>
@@ -83,7 +83,7 @@
 
             <button
               (click)="deleteTodo(todo)"
-              class="px-2 py-1 text-sm text-red-600 hover:underline"
+              class="px-2 py-1 text-sm text-red-600 hover:underline cursor-pointer"
             >
               Delete
             </button>
