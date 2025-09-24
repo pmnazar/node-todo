@@ -15,21 +15,20 @@ router.get("/", async (req, res) => {
 
 // POST /todos
 router.post("/", async (req, res) => {
-  if (!req.body.task)
-    return res.status(400).json({ error: "Task is required" });
+  if (!req.body.title)
+    return res.status(400).json({ error: "Title is required" });
   if (!req.user || !req.user.id)
     return res.status(401).json({ error: "Unauthorize" });
 
   try {
     const todo = new Todo({
-      task: req.body.task,
+      title: req.body.title,
       user: req.user.id,
       completed: req.body.completed,
     });
     await todo.save();
 
-    const todos = await Todo.find({ user: req.user.id });
-    res.json(todos);
+    res.json(todo);
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Failed to create todo" });
@@ -40,11 +39,11 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { task, completed } = req.body;
+    const { title, completed } = req.body;
     const updated = await Todo.findByIdAndUpdate(
       id,
-      { task, completed },
-      { new: true }
+      { title, completed },
+      { new: true },
     );
     if (!updated) return res.status(404).json({ error: "Todo not found" });
     res.json(updated);

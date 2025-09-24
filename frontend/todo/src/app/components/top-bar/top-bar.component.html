@@ -1,0 +1,22 @@
+<header class="bg-blue-600 text-white shadow-md">
+  <div class="container mx-auto flex justify-between items-center px-4 py-3">
+    <!-- Left: Logo -->
+    <div class="flex items-center space-x-2">
+      <img src="assets/logo.png" alt="Todo App Logo" class="h-8 w-8" />
+      <span class="text-xl font-bold">Todo App</span>
+    </div>
+
+    <!-- Right: Username + Logout -->
+    <div class="flex items-center space-x-4">
+      @if (isLoggedIn$ | async) {
+        <span class="font-medium">{{ username }}</span>
+        <button
+          (click)="logout()"
+          class="bg-white text-blue-600 px-3 py-1 rounded hover:bg-blue-100 transition cursor-pointer"
+        >
+          Logout
+        </button>
+      }
+    </div>
+  </div>
+</header>

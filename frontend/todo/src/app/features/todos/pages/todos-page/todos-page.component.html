@@ -1,0 +1,102 @@
+<section class="max-w-xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow">
+  <!-- Add new todo -->
+  <form (ngSubmit)="addTodo()" class="flex gap-2 mb-6" #todoForm="ngForm">
+    <input
+      type="text"
+      name="title"
+      [(ngModel)]="newTodoTitle"
+      required
+      placeholder="What needs to be done?"
+      class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <button
+      type="submit"
+      [disabled]="!newTodoTitle?.trim()"
+      class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 cursor-pointer"
+    >
+      Add
+    </button>
+  </form>
+
+  <!-- Todo list -->
+  @if ((todos$ | async)?.length) {
+    <ul class="space-y-3">
+      @for (todo of todos$ | async; track todo._id) {
+        <li
+          class="flex items-center justify-between p-3 border rounded-lg"
+          [class.bg-gray-100]="todo.completed"
+        >
+          <!-- Left side: checkbox + title -->
+          <div class="flex items-center gap-3 flex-1">
+            <input
+              type="checkbox"
+              [checked]="todo.completed"
+              (change)="toggle(todo)"
+              class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+
+            <!-- Edit mode -->
+            @if (editingId === todo._id) {
+              <input
+                [(ngModel)]="editingTitle"
+                name="edit-{{ todo._id }}"
+                class="flex-1 px-2 py-1 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                (keyup.enter)="saveEdit(todo)"
+                (keyup.escape)="cancelEdit()"
+              />
+            } @else {
+              <!-- Display mode -->
+              <span
+                class="flex-1"
+                [class.line-through]="todo.completed"
+                (dblclick)="startEdit(todo)"
+              >
+                {{ todo.title }}
+              </span>
+            }
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-2">
+            @if (editingId === todo._id) {
+              <button
+                (click)="saveEdit(todo)"
+                class="px-2 py-1 text-sm text-green-600 hover:underline"
+              >
+                Save
+              </button>
+
+              <button
+                (click)="cancelEdit()"
+                class="px-2 py-1 text-sm text-gray-600 hover:underline"
+              >
+                Cancel
+              </button>
+            } @else {
+              <button
+                (click)="startEdit(todo)"
+                class="px-2 py-1 text-sm text-blue-600 hover:underline"
+              >
+                Edit
+              </button>
+            }
+
+            <button
+              (click)="deleteTodo(todo)"
+              class="px-2 py-1 text-sm text-red-600 hover:underline"
+            >
+              Delete
+            </button>
+          </div>
+        </li>
+      }
+    </ul>
+  } @else {
+    <!-- Empty state -->
+    <ng-template #emptyState>
+      <p class="text-center text-gray-500 mt-6">
+        No todos yet — add your first task above.
+      </p>
+    </ng-template>
+  }
+</section>
