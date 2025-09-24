@@ -9,7 +9,7 @@
     <!-- Right: Username + Logout -->
     <div class="flex items-center space-x-4">
       @if (isLoggedIn$ | async) {
-        <span class="font-medium">{{ username }}</span>
+        <span class="font-medium">{{ (user$ | async)?.username }}</span>
         <button
           (click)="logout()"
           class="bg-white text-blue-600 px-3 py-1 rounded hover:bg-blue-100 transition cursor-pointer"
