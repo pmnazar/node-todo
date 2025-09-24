@@ -17,21 +17,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const watchDir = path.join(__dirname, "../frontend/todo/dist/todo");
 
-const allowedOrigins = [
-  "http://localhost:4200",
-  "https://node-todo-frontend.onrender.com",
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // for Postman or same-origin
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `CORS policy does not allow access from ${origin}`;
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   }),
 );
@@ -54,7 +42,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/todos", todoRoutes);
 
-app.get(/.*/, (req, res) => {
+app.get(/.*/, (_, res) => {
   res.sendFile(path.join(watchDir, "index.html"));
 });
 
