@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -8,6 +8,16 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
   private baseURL = `${environment.apiUrl}/api/auth`;
+  private _isLoggedIn = new BehaviorSubject<boolean>(
+    !!localStorage.getItem('token'),
+  );
+  isLoggedIn$ = this._isLoggedIn.asObservable();
+  set isLoggedIn(v: boolean) {
+    this._isLoggedIn.next(v);
+  }
+  get isLoggedIn() {
+    return this._isLoggedIn.getValue();
+  }
 
   constructor(private http: HttpClient) {}
 
@@ -23,16 +33,18 @@ export class AuthService {
       tap({
         next: (res) => {
           localStorage.setItem('token', res.token);
+          this.isLoggedIn = true;
         },
       }),
     );
   }
 
-  isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
-  }
-
   logout() {
     localStorage.removeItem('token');
+    this.isLoggedIn = false;
+  }
+
+  get token() {
+    return localStorage.getItem('token');
   }
 }
