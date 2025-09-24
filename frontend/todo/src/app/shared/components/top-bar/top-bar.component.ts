@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
+import { UserService } from '../../../core/services/user.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-top-bar',
@@ -11,14 +13,16 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './top-bar.component.scss',
 })
 export class TopBarComponent {
-  username = '';
+  user$: Observable<User>;
   isLoggedIn$: Observable<boolean>;
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
   ) {
     this.isLoggedIn$ = this.authService.isLoggedIn$;
+    this.user$ = this.userService.getCurrentUser().pipe(map((res) => res));
   }
 
   logout() {

@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import todoRoutes from "./routes/todos.js";
 import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/user.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -48,6 +49,7 @@ mongoose
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/todos", todoRoutes);
 
 app.get(/.*/, (req, res) => {
