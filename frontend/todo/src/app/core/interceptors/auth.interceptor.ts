@@ -21,7 +21,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           switchMap((newToken) => {
             authService.token = newToken;
             const retryReq = req.clone({
-              headers: req.headers.set('Authorization', `Bearer ${newToken}`),
+              headers: req.headers
+                .set('Authorization', `Bearer ${newToken}`)
+                .set('x-refresh-attempt', 'true'),
             });
             return next(retryReq);
           }),
