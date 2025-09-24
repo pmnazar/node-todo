@@ -51,8 +51,19 @@ export class TodosPageComponent implements OnInit {
     });
   }
 
-  toggle(todo: Todo) {
-    console.log(todo);
+  toggle(event: Event, todo: Todo) {
+    const input = event.target as HTMLInputElement;
+
+    todo.completed = input.checked;
+
+    this.todosService.updateTodo(todo).subscribe({
+      next: () => {
+        this.editingId = null;
+      },
+      error: () => {
+        console.error('Failed to update task');
+      },
+    });
   }
 
   startEdit(todo: Todo) {
