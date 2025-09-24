@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -26,25 +26,52 @@ export class AuthService {
     return this.http.post(url, { username, email, password });
   }
 
-  login(username: string, password: string): Observable<{ token: string }> {
+  login(
+    username: string,
+    password: string,
+  ): Observable<{ accessToken: string }> {
     const url = `${this.baseURL}/login`;
 
-    return this.http.post<{ token: string }>(url, { username, password }).pipe(
-      tap({
-        next: (res) => {
-          localStorage.setItem('token', res.token);
-          this.isLoggedIn = true;
-        },
-      }),
-    );
+    return this.http
+      .post<{ accessToken: string }>(url, { username, password })
+      .pipe(
+        tap({
+          next: (res) => {
+            localStorage.setItem('token', res.accessToken);
+            this.isLoggedIn = true;
+          },
+        }),
+      );
   }
 
   logout() {
-    localStorage.removeItem('token');
-    this.isLoggedIn = false;
+    const url = `${this.baseURL}/logout`;
+    this.http.post(url, {}, { withCredentials: true }).subscribe({
+      next: () => {
+        console.log('Logged out successfully');
+        localStorage.removeItem('accessToken');
+        this.isLoggedIn = false;
+      },
+      error: (e) => console.error(e),
+    });
+  }
+
+  set token(v: string | null) {
+    if (v) localStorage.setItem('token', v);
   }
 
   get token() {
     return localStorage.getItem('token');
+  }
+
+  refreshToken(): Observable<string> {
+    const url = `${this.baseURL}/refresh`;
+    return this.http
+      .post<{ accessToken: string }>(url, {}, { withCredentials: true })
+      .pipe(
+        tap((res) => (this.token = res.accessToken)),
+        tap(() => console.log('Access token refreshed')),
+        map((res) => res.accessToken),
+      );
   }
 }

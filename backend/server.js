@@ -4,11 +4,12 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
-import todoRoutes from "./routes/todos.js";
-import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/user.js";
+import todoRoutes from "./routes/todosRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -36,6 +37,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
 
 // Serve frontend
 app.use(express.static(watchDir));

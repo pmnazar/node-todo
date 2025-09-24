@@ -45,7 +45,7 @@ export class LoginComponent {
       const password = this.form.value.password!;
       this.authService.login(username, password).subscribe({
         next: (res) => {
-          if (res?.token) {
+          if (res?.accessToken) {
             this.router.navigate(['/todos']);
           }
         },
