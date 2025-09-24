@@ -12,7 +12,7 @@ import { Todo } from '../../models/todo.model';
   styleUrl: './todos-page.component.scss',
 })
 export class TodosPageComponent implements OnInit {
-  newTodoTitle: string | null = null;
+  newTodoTitle: string | null | undefined = null;
   editingTitle: string | null = null;
   editingId: string | null = null;
   todos$: Observable<Todo[]>;
@@ -36,9 +36,29 @@ export class TodosPageComponent implements OnInit {
 
   toggle(todo: Todo) {}
 
-  startEdit(todo: Todo) {}
+  startEdit(todo: Todo) {
+    if (todo?._id) {
+      this.editingId = todo._id;
+      this.editingTitle = todo.title;
+    }
+  }
 
-  saveEdit(todo: Todo) {}
+  saveEdit(todo: Todo, title: string | null) {
+    if (!title) return;
+    todo.title = title;
 
-  cancelEdit() {}
+    this.todosService.updateTodo(todo).subscribe({
+      next: () => {
+        this.editingId = null;
+      },
+      error: () => {
+        console.error('Failed to update task');
+      },
+    });
+  }
+
+  cancelEdit() {
+    this.editingId = null;
+    this.editingTitle = null;
+  }
 }

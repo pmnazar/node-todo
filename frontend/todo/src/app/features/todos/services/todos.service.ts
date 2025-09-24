@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { Todo } from '../models/todo.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
@@ -31,7 +31,6 @@ export class TodosService {
 
     this.http.post<Todo>(this._baseURL, { title }).subscribe({
       next: (savedTodo) => {
-        console.log(savedTodo);
         this.todos$.next(
           this.todos$.value.map((t) => (t._id === tempId ? savedTodo : t)),
         );
@@ -40,5 +39,28 @@ export class TodosService {
         this.todos$.next(this.todos$.value.filter((t) => t._id !== tempId));
       },
     });
+  }
+
+  updateTodo(updatedTodo: Todo): Observable<Todo> {
+    this.todos$.next(
+      this.todos$.value.map((t) =>
+        t._id === updatedTodo._id ? { ...t, ...updatedTodo } : t,
+      ),
+    );
+
+    return this.http
+      .put<Todo>(`${this._baseURL}/${updatedTodo._id}`, updatedTodo)
+      .pipe(
+        tap({
+          next: (savedTodo) => {
+            this.todos$.next(
+              this.todos$.value.map((t) =>
+                t._id === savedTodo._id ? savedTodo : t,
+              ),
+            );
+          },
+          error: () => {},
+        }),
+      );
   }
 }

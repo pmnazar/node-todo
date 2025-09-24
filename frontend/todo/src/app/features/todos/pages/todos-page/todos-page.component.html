@@ -41,7 +41,7 @@
                 [(ngModel)]="editingTitle"
                 name="edit-{{ todo._id }}"
                 class="flex-1 px-2 py-1 border rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                (keyup.enter)="saveEdit(todo)"
+                (keyup.enter)="saveEdit(todo, editingTitle)"
                 (keyup.escape)="cancelEdit()"
               />
             } @else {
@@ -60,7 +60,7 @@
           <div class="flex items-center gap-2">
             @if (editingId === todo._id) {
               <button
-                (click)="saveEdit(todo)"
+                (click)="saveEdit(todo, editingTitle)"
                 class="px-2 py-1 text-sm text-green-600 hover:underline"
               >
                 Save
