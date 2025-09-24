@@ -35,6 +35,5 @@ export async function verifyRefreshToken(token) {
 }
 
 export async function revokeRefreshToken(token) {
-  console.log(token);
   await RefreshToken.deleteOne({ token });
 }
