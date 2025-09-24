@@ -57,11 +57,11 @@ export class AuthService {
   }
 
   set token(v: string | null) {
-    if (v) localStorage.setItem('token', v);
+    if (v) localStorage.setItem('accessToken', v);
   }
 
   get token() {
-    return localStorage.getItem('token');
+    return localStorage.getItem('accessToken');
   }
 
   refreshToken(): Observable<string> {
