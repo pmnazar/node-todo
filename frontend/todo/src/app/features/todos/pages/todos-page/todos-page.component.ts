@@ -3,11 +3,13 @@ import { Component, model, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Observable, of, tap } from 'rxjs';
 import { TodosService } from '../../services/todos.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Todo } from '../../models/todo.model';
+import { ConfirmDeleteComponent } from '../../../../shared/dialogs/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-todos-page',
-  imports: [FormsModule, AsyncPipe],
+  imports: [FormsModule, AsyncPipe, MatDialogModule],
   templateUrl: './todos-page.component.html',
   styleUrl: './todos-page.component.scss',
 })
@@ -17,7 +19,10 @@ export class TodosPageComponent implements OnInit {
   editingId: string | null = null;
   todos$: Observable<Todo[]>;
 
-  constructor(private todosService: TodosService) {
+  constructor(
+    private todosService: TodosService,
+    private dialog: MatDialog,
+  ) {
     this.todos$ = this.todosService.getTodos();
   }
 
@@ -29,10 +34,22 @@ export class TodosPageComponent implements OnInit {
     const title = this.newTodoTitle?.trim();
     if (!title) return;
 
-    this.todosService.addTodo(title);
+    this.todosService.addTodo(title).subscribe({
+      next: () => {
+        this.newTodoTitle = null;
+      },
+    });
   }
 
-  deleteTodo(todo: Todo) {}
+  deleteTodo(todo: Todo) {
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent);
+
+    dialogRef.afterClosed().subscribe({
+      next: (confirmed) => {
+        if (confirmed) this.todosService.deleteTodo(todo);
+      },
+    });
+  }
 
   toggle(todo: Todo) {}
 

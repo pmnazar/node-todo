@@ -23,22 +23,25 @@ export class TodosService {
     });
   }
 
-  addTodo(title: string): void {
+  addTodo(title: string): Observable<Todo> {
     const tempId = Date.now().toString();
     const newTodo = { _id: tempId, title, completed: false };
 
     this.todos$.next([...this.todos$.value, newTodo]);
 
-    this.http.post<Todo>(this._baseURL, { title }).subscribe({
-      next: (savedTodo) => {
-        this.todos$.next(
-          this.todos$.value.map((t) => (t._id === tempId ? savedTodo : t)),
-        );
-      },
-      error: () => {
-        this.todos$.next(this.todos$.value.filter((t) => t._id !== tempId));
-      },
-    });
+    return this.http.post<Todo>(this._baseURL, { title }).pipe(
+      tap({
+        next: (savedTodo) => {
+          this.todos$.next(
+            this.todos$.value.map((t) => (t._id === tempId ? savedTodo : t)),
+          );
+          return savedTodo;
+        },
+        error: () => {
+          this.todos$.next(this.todos$.value.filter((t) => t._id !== tempId));
+        },
+      }),
+    );
   }
 
   updateTodo(updatedTodo: Todo): Observable<Todo> {
@@ -62,5 +65,18 @@ export class TodosService {
           error: () => {},
         }),
       );
+  }
+
+  deleteTodo(todo: Todo) {
+    const url = `${this._baseURL}/${todo._id}`;
+    const hashTodos = this.todos$.value;
+    this.todos$.next(this.todos$.value.filter((t) => t._id !== todo._id));
+
+    this.http.delete(url).subscribe({
+      next: () => {},
+      error: () => {
+        this.todos$.next(hashTodos);
+      },
+    });
   }
 }
