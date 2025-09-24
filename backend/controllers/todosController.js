@@ -1,20 +1,11 @@
-import express from "express";
 import Todo from "../models/Todo.js";
-import { authMiddleware } from "../middleware/auth.js";
 
-const router = express.Router();
-
-// Protect all routes with authMiddleware
-router.use(authMiddleware);
-
-// GET /todos
-router.get("/", async (req, res) => {
+export const getTodo = async (req, res) => {
   const todos = await Todo.find({ user: req.user.id }).sort({ createdAt: 1 });
   res.json(todos);
-});
+};
 
-// POST /todos
-router.post("/", async (req, res) => {
+export const createTodo = async (req, res) => {
   if (!req.body.title)
     return res.status(400).json({ error: "Title is required" });
   if (!req.user || !req.user.id)
@@ -33,10 +24,9 @@ router.post("/", async (req, res) => {
     console.error(e);
     res.status(500).json({ error: "Failed to create todo" });
   }
-});
+};
 
-// PUT /todos/:id
-router.put("/:id", async (req, res) => {
+export const editTodo = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, completed } = req.body;
@@ -51,10 +41,9 @@ router.put("/:id", async (req, res) => {
     console.error(e);
     res.status(500).json({ error: "Failed to update todo" });
   }
-});
+};
 
-// DELETE /todos/:id
-router.delete("/:id", async (req, res) => {
+export const deleteTodo = async (req, res) => {
   try {
     const { id } = req.params;
     await Todo.findByIdAndDelete(id);
@@ -64,6 +53,4 @@ router.delete("/:id", async (req, res) => {
     console.error(e);
     res.status(500).json({ error: "Failed to delete todo" });
   }
-});
-
-export default router;
+};
