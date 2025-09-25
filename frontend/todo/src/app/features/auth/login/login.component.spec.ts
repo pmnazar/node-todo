@@ -87,13 +87,6 @@ describe('LoginComponent', () => {
     expect(submitButton).toBeEnabled();
   });
 
-  // it('should navigate when triggered register link', async () => {
-  //   const {fixture, router} = await setup(mockAuthService);
-  //   const link = screen.getByText(/Register/i);
-  //   fireEvent.click(link);
-  //   expect(router.)
-  // })
-
   it('should call login and navigate when clicking login button', async () => {
     const { navigateSpy, usernameInput, passwordInput, submitButton } =
       await setup(mockAuthService);
