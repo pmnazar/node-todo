@@ -1,17 +1,19 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, model, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Observable, of, tap } from 'rxjs';
-import { TodosService } from '../../services/todos.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { Todo } from '../../models/todo.model';
+import { Observable } from 'rxjs';
+
 import { ConfirmDeleteComponent } from '../../../../shared/dialogs/confirm-delete/confirm-delete.component';
+import { Todo } from '../../models/todo.model';
+import { TodosService } from '../../services/todos.service';
 
 @Component({
   selector: 'app-todos-page',
   imports: [FormsModule, AsyncPipe, MatDialogModule],
   templateUrl: './todos-page.component.html',
   styleUrl: './todos-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodosPageComponent implements OnInit {
   newTodoTitle: string | null | undefined = null;
