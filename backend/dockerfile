@@ -17,7 +17,7 @@ COPY . .
 
 # Build TypeScript
 RUN npm run build
-
+RUN ls -l /app/dist
 # =========================
 # Stage 2 — Production
 # =========================
