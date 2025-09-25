@@ -4,7 +4,7 @@
   "description": "Pet project",
   "main": "server.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts -p tsconfig.dev.json",
+    "dev": "tsx watch server.ts -p tsconfig.dev.json",
     "build": "tsc -p tsconfig.prod.json",
     "start": "node dist/server.js",
     "test": "vitest run",
