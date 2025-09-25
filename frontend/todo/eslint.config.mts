@@ -39,6 +39,14 @@ export default defineConfig([
   tseslint.configs.strict,
   tseslint.configs.stylistic,
   {
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
+      ],
+    },
+  },
+  {
     files: ['**/*.json'],
     plugins: { json },
     language: 'json/json',
