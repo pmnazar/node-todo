@@ -5,9 +5,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { passwordMatchValidator } from '../../../shared/validators';
-import { AuthService } from '../../../core/services/auth.service';
 import { Router, RouterLink } from '@angular/router';
+
+import { AuthService } from '../../../core/services/auth.service';
+import { passwordMatchValidator } from '../../../shared/validators';
 
 @Component({
   selector: 'app-register',
