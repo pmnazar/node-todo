@@ -10,7 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "type": "module",
+  "type": "commonjs",
   "author": "Pylypiak Nazar",
   "license": "ISC",
   "dependencies": {

@@ -17,7 +17,7 @@ COPY . .
 
 # Build TypeScript
 RUN npm run build
-RUN ls -R /app/dist
+
 # =========================
 # Stage 2 — Production
 # =========================
@@ -39,6 +39,5 @@ COPY --from=builder /app/dist ./dist
 EXPOSE 3000
 
 # Start server
-WORKDIR /app
 CMD ["node", "dist/server.js"]
 
