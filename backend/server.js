@@ -8,6 +8,7 @@ dotenv.config();
 import todoRoutes from "./routes/todosRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import llmRoutes from "./routes/llmRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -33,6 +34,7 @@ mongoose
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/todos", todoRoutes);
+app.use("/api/llm", llmRoutes);
 
 app.listen(PORT, () =>
   console.log(`Server running on http://localhost:${PORT}`),
