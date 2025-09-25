@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 
+import { LlmService } from '../../../../core/services/llm.service';
 import { ConfirmDeleteComponent } from '../../../../shared/dialogs/confirm-delete/confirm-delete.component';
 import { Todo } from '../../models/todo.model';
 import { TodosService } from '../../services/todos.service';
@@ -23,6 +24,7 @@ export class TodosPageComponent implements OnInit {
 
   constructor(
     private todosService: TodosService,
+    private llmService: LlmService,
     private dialog: MatDialog,
   ) {
     this.todos$ = this.todosService.getTodos();
@@ -36,6 +38,14 @@ export class TodosPageComponent implements OnInit {
     const title = this.newTodoTitle?.trim();
     if (!title) return;
 
+    this.llmService.parseTask(title).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (e) => {
+        console.error(e);
+      },
+    });
     this.todosService.addTodo(title).subscribe({
       next: () => {
         this.newTodoTitle = null;
