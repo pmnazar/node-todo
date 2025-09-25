@@ -1,0 +1,60 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Angular",
+      "type": "shell",
+      "command": "npm run start",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend/todo"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "group": "todoGroup",
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Backend",
+      "type": "shell",
+      "command": "npx nodemon server.js",
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "group": "todoGroup",
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
+      "label": "/",
+      "type": "shell",
+      "command": "exec $SHELL", // "cmd /k" on Windows
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "new",
+        "reveal": "always",
+        "group": "terminal"
+      }
+    },
+    {
+      "label": "Start Full Project",
+      "dependsOn": ["Angular", "Backend", "/"],
+      "dependsOrder": "parallel",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
