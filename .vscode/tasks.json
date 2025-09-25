@@ -36,7 +36,7 @@
       "type": "shell",
       "command": "exec $SHELL", // "cmd /k" on Windows
       "options": {
-        "cwd": "${workspaceFolder}"
+        "cwd": "${workspaceFolder}/frontend/todo"
       },
       "isBackground": true,
       "problemMatcher": [],
