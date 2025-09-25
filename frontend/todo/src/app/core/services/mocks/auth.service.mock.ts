@@ -1,4 +1,3 @@
-// auth.service.mock.ts
 import { BehaviorSubject, of } from 'rxjs';
 
 export const mockAccessToken = 'mocked-access-token';
@@ -18,24 +17,24 @@ export class MockAuthService {
 
   token: string | null = mockAccessToken;
 
-  register(_username: string, _email: string, _password: string) {
+  register = jest.fn((_username: string, _email: string, _password: string) => {
     return of(mockRegisterResponse);
-  }
+  });
 
-  login(_username: string, _password: string) {
+  login = jest.fn((_username: string, _password: string) => {
     this.isLoggedIn = true;
     this.token = mockAccessToken;
     return of({ accessToken: mockAccessToken });
-  }
+  });
 
-  logout() {
+  logout = jest.fn(() => {
     this.isLoggedIn = false;
     this.token = null;
     return of({ success: true });
-  }
+  });
 
-  refreshToken() {
+  refreshToken = jest.fn(() => {
     this.token = mockAccessToken;
     return of(mockAccessToken);
-  }
+  });
 }
