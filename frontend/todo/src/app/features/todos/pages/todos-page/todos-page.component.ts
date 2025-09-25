@@ -63,6 +63,7 @@ export class TodosPageComponent implements OnInit {
         this.editingId = null;
       },
       error: () => {
+        // eslint-disable-next-line no-console
         console.error('Failed to update task');
       },
     });
@@ -84,6 +85,7 @@ export class TodosPageComponent implements OnInit {
         this.editingId = null;
       },
       error: () => {
+        // eslint-disable-next-line no-console
         console.error('Failed to update task');
       },
     });
