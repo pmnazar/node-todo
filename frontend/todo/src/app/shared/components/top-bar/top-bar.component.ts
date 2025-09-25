@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { Router } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { map, Observable } from 'rxjs';
+
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { User } from '../../models/user.model';
