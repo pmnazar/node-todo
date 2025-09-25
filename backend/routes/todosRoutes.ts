@@ -1,11 +1,11 @@
 import express from "express";
-import { authMiddleware } from "../middleware/auth.js";
+import { authMiddleware } from "../middleware/auth";
 import {
   createTodo,
   deleteTodo,
   editTodo,
   getTodo,
-} from "../controllers/todosController.js";
+} from "../controllers/todosController";
 
 const router = express.Router();
 
