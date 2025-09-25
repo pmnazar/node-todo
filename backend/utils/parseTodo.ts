@@ -1,10 +1,14 @@
-export function parseLLMResponse(llmText) {
+export function parseLLMResponse(llmText: string): {
+  title: string;
+  tags: string[];
+  priority: string;
+} {
   const lines = llmText
     .split("\n")
     .map((l) => l.trim())
     .filter(Boolean);
   const title = lines[0];
-  let tags = [];
+  let tags: string[] = [];
   let priority = "medium";
 
   lines.slice(1).forEach((line) => {

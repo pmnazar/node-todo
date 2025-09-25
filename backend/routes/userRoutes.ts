@@ -1,11 +1,11 @@
 import express from "express";
 import { authMiddleware } from "../middleware/auth.js";
-import { createTodoFromText } from "../controllers/llmController.js";
+import { getCurrentUser } from "../controllers/userController";
 
 const router = express.Router();
 
 router.use(authMiddleware);
 
-router.post("/create-task", createTodoFromText);
+router.get("/me", getCurrentUser);
 
 export default router;
