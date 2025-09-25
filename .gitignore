@@ -3,7 +3,8 @@ node_modules/
 frontend/todo/node_modules/
 
 # Build output
-frontend/todo/dist/
+frontend/todo/dist
+backend/dist
 
 # Environment files
 backend/.env
