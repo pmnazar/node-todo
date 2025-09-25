@@ -9,7 +9,9 @@
       <mat-form-field appearance="fill" class="w-full">
         <mat-label>Username</mat-label>
         <input matInput formControlName="username" class="px-3 py-2" />
-        @if (form.controls.username.hasError("required")) {
+        <!-- eslint-disable @angular-eslint/template/no-call-expression -->
+        @if (form.controls.username.hasError('required')) {
+          <!-- eslint-enable @angular-eslint/template/no-call-expression -->
           <mat-error>Required</mat-error>
         }
       </mat-form-field>
@@ -23,13 +25,16 @@
           formControlName="password"
           class="px-3 py-2 rounded"
         />
-        @if (form.controls.password.hasError("required")) {
+        <!-- eslint-disable @angular-eslint/template/no-call-expression -->
+        @if (form.controls.password.hasError('required')) {
+          <!-- eslint-enable @angular-eslint/template/no-call-expression -->
           <mat-error>Required</mat-error>
         }
       </mat-form-field>
 
       <!-- Button -->
       <button
+        type="button"
         mat-raised-button
         color="primary"
         class="w-full py-2 rounded font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition"

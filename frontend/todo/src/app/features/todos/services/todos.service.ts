@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
-import { Todo } from '../models/todo.model';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+
 import { environment } from '../../../../environments/environment';
+import { Todo } from '../models/todo.model';
 
 @Injectable({
   providedIn: 'root',

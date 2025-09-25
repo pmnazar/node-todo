@@ -1,4 +1,4 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
@@ -9,13 +9,14 @@ import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-top-bar',
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, NgOptimizedImage],
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.scss',
 })
 export class TopBarComponent {
   user$: Observable<User>;
   isLoggedIn$: Observable<boolean>;
+  logoImg = 'assets/logo.png';
 
   constructor(
     private authService: AuthService,

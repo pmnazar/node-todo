@@ -9,11 +9,13 @@
       placeholder="What needs to be done?"
       class="flex-1 px-4 py-2 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
     />
+    <!-- eslint-disable @angular-eslint/template/no-call-expression -->
     <button
       type="submit"
       [disabled]="!newTodoTitle?.trim()"
       class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
     >
+      <!-- eslint-enable @angular-eslint/template/no-call-expression -->
       Add
     </button>
   </form>
@@ -39,7 +41,7 @@
             @if (editingId === todo._id) {
               <input
                 [(ngModel)]="editingTitle"
-                name="edit-{{ todo._id }}"
+                [name]="'edit-' + todo._id"
                 class="flex-1 px-2 py-1 border-b-2 border-blue-400 focus:outline-none focus:border-blue-500 transition-colors"
                 (keyup.enter)="saveEdit(todo, editingTitle)"
                 (keyup.escape)="cancelEdit()"
@@ -60,6 +62,7 @@
           <div class="flex items-center gap-2">
             @if (editingId === todo._id) {
               <button
+                type="button"
                 (click)="saveEdit(todo, editingTitle)"
                 class="px-2 py-1 text-sm text-green-600 hover:underline"
               >
@@ -67,6 +70,7 @@
               </button>
 
               <button
+                type="button"
                 (click)="cancelEdit()"
                 class="px-2 py-1 text-sm text-gray-600 hover:underline cursor-pointer"
               >
@@ -74,6 +78,7 @@
               </button>
             } @else {
               <button
+                type="button"
                 (click)="startEdit(todo)"
                 class="px-2 py-1 text-sm text-blue-600 hover:underline cursor-pointer"
               >
@@ -82,6 +87,7 @@
             }
 
             <button
+              type="button"
               (click)="deleteTodo(todo)"
               class="px-2 py-1 text-sm text-red-600 hover:underline cursor-pointer"
             >
