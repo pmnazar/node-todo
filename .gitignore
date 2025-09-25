@@ -1,6 +1,13 @@
+# Node modules
 node_modules/
-frontend/todo/node_modules
-frontend/todo/dist
-*.log
+frontend/todo/node_modules/
 
+# Build output
+frontend/todo/dist/
+
+# Environment files
+backend/.env
 .env
+
+# Logs
+*.log
