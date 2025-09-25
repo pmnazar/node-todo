@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import RefreshToken from "../models/RefreshToken.js";
 import { IUser } from "../models/User.js";
 
-export function generateAccessToken(user: IUser) {
+export function generateAccessToken(user: Partial<IUser>) {
   return jwt.sign(
     { id: user.id, username: user.username },
     process.env.ACCESS_TOKEN_SECRET!,

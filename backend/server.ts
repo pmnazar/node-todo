@@ -7,8 +7,8 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 import todoRoutes from "./routes/todosRoutes";
 import authRoutes from "./routes/authRoutes";
-import userRoutes from "./routes/userRoutes.ts";
-import llmRoutes from "./routes/llmRoutes.js";
+import userRoutes from "./routes/userRoutes";
+import llmRoutes from "./routes/llmRoutes";
 
 const app = express();
 const PORT = process.env.PORT;
