@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -21,9 +22,17 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  register(username: string, email: string, password: string): Observable<any> {
+  register(
+    username: string,
+    email: string,
+    password: string,
+  ): Observable<{ message: string }> {
     const url = `${this.baseURL}/register`;
-    return this.http.post(url, { username, email, password });
+    return this.http.post<{ message: string }>(url, {
+      username,
+      email,
+      password,
+    });
   }
 
   login(
