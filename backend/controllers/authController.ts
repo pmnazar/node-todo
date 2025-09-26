@@ -1,13 +1,16 @@
-import User from "../models/User";
 import bcrypt from "bcryptjs";
+import { Request, Response } from "express";
+
+import User from "../models/User";
 import {
   generateAccessToken,
   generateRefreshToken,
   revokeRefreshToken,
   verifyRefreshToken,
 } from "../services/tokenServices.js";
-import { Request, Response } from "express";
-const isProd = process.env.NODE_ENV === "production";
+import { NODE_ENV } from "../config/env";
+
+const isProd = NODE_ENV === "production";
 
 interface RegisterBody {
   username: string;

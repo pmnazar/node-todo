@@ -1,8 +1,8 @@
 import { OpenAI } from "openai";
-import dotenv from "dotenv";
-dotenv.config();
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+import { OPENAI_API_KEY } from "../config/env";
+
+const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
 
 export async function parseTaskWithLLM(taskText: string) {
   const response = await openai.chat.completions.create({

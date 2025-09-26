@@ -1,6 +1,6 @@
-# 📝 Todo App (Angular + Express + MongoDB)
+# 📝 Todo App (Angular + Express + MongoDB + TypeScript)
 
-This is a simple Todo App built with Angular on the frontend, Express for the backend, and MongoDB for data persistence.  
+This is a simple Todo App built with Angular on the frontend, Express with TypeScript for the backend, and MongoDB for data persistence.
 It's a pet project for learning, experimenting, and interview practice.
 
 This README explains the project structure, setup instructions, usage, and testing.
@@ -19,7 +19,8 @@ This README explains the project structure, setup instructions, usage, and testi
 - User authentication with JWT
 - Todos are bound to the logged-in user
 - Minimalistic UI with Angular
-- Code quality enforced with ESLint
+- Backend written in TypeScript
+- Code quality enforced with ESLint + TypeScript
 
 ---
 
@@ -28,20 +29,23 @@ This README explains the project structure, setup instructions, usage, and testi
 ```
 project/
 ├─ backend/
-│  ├─ .env                      # Environment variables (JWT_SECRET, MONGO_URI, PORT)
-│  ├─ controllers/              # Controllers for handling route logic
+│  ├─ .env.example              # Example environment variables (JWT_SECRET, MONGO_URI, OPENAI_API_KEY, etc)
+│  ├─ controllers/              # Controllers for handling route logic (.ts)
 │  ├─ dockerfile                # Dockerfile for backend
-│  ├─ middleware/               # JWT authentication and other middlewares
-│  ├─ models/                   # Mongoose schemas (User.js, Todo.js)
+│  ├─ middleware/               # JWT authentication and other middlewares (.ts)
+│  ├─ models/                   # Mongoose schemas (User.ts, Todo.ts)
 │  ├─ node_modules/             # Installed packages
 │  ├─ package-lock.json
-│  ├─ package.json
-│  ├─ routes/                   # API routes (auth.js, todos.js)
-│  ├─ server.js                 # Main Express server
-│  ├─ services/                 # Additional services (e.g., email, notifications)
-│  └─ tests/                    # Vitest + Supertest + MongoMemoryServer tests
+│  ├─ package.json              # Contains scripts: dev, build, start, test, test:watch
+│  ├─ routes/                   # API routes (auth.ts, todos.ts)
+│  ├─ server.ts                 # Main Express server
+│  ├─ services/                 # Additional services (e.g., email, notifications) (.ts)
+│  └─ tests/                    # Vitest + Supertest + MongoMemoryServer tests (.ts)
 ├─ frontend/
 │  └─ todo/                     # Angular project (Angular CLI structure)
+├─ tsconfig.json                 # TypeScript configuration for backend
+├─ tsconfig.dev.json             # TypeScript config for development
+├─ tsconfig.prod.json            # TypeScript config for production
 ├─ .editorconfig                 # Editor configuration
 ├─ .gitignore
 └─ README.md
@@ -66,12 +70,17 @@ mongod --config /usr/local/etc/mongod.conf
 docker run -d -p 27017:27017 --name mongodb mongo
 ```
 
-Start backend server:
+Start backend server (TypeScript compilation + execution):
 
 ```bash
-node server.js
-# or with nodemon
-npx nodemon server.js
+# Development mode with watch
+npm run dev
+
+# Compile TypeScript for production
+npm run build
+
+# Run server
+npm start
 ```
 
 ### Frontend
@@ -93,9 +102,7 @@ ng serve
 
 ```bash
 cd backend
-node server.js
-# or with nodemon
-npx nodemon server.js
+npm run dev  # Start in watch mode using tsx
 ```
 
 ### Frontend
@@ -114,7 +121,7 @@ ng serve
 - CRUD operations for tasks (Create, Read, Update, Delete)
 - Toggle todo completion status
 - Frontend fetches tasks via API
-- Code quality enforced with ESLint
+- Code quality enforced with ESLint + TypeScript
 
 ---
 
@@ -128,7 +135,8 @@ ng serve
 
 ```bash
 cd backend
-npm test
+npm run test        # Run all tests
+npm run test:watch  # Watch mode
 ```
 
 ### Frontend
@@ -148,10 +156,10 @@ npm run lint    # run ESLint on frontend code
 ## 💻 Tech Stack
 
 - **Frontend:** Angular, TypeScript, HTML, CSS
-- **Backend:** Node.js, Express
+- **Backend:** Node.js, Express, TypeScript
 - **Database:** MongoDB, Mongoose
 - **Testing:** Vitest, Supertest, MongoMemoryServer, Jest, @testing-library/angular
-- **Linting:** ESLint
+- **Linting:** ESLint, TypeScript
 
 ---
 
