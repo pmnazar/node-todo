@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User";
 import { Request, Response, NextFunction } from "express";
+
+import User from "../models/User";
+import { ACCESS_TOKEN_SECRET } from "../config/env";
 
 export async function authMiddleware(
   req: Request,
@@ -13,7 +15,7 @@ export async function authMiddleware(
   if (!token) return res.status(401).json({ message: "No noken provided" });
 
   try {
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as {
+    const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET!) as {
       id: string;
     };
     const user = await User.findById(decoded.id).select("-password");

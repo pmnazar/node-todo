@@ -1,11 +1,13 @@
 import jwt from "jsonwebtoken";
+
 import RefreshToken from "../models/RefreshToken.js";
 import { IUser } from "../models/User.js";
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "../config/env";
 
 export function generateAccessToken(user: Partial<IUser>) {
   return jwt.sign(
     { id: user.id, username: user.username },
-    process.env.ACCESS_TOKEN_SECRET!,
+    ACCESS_TOKEN_SECRET!,
     { expiresIn: "10s" },
   );
 }
@@ -13,7 +15,7 @@ export function generateAccessToken(user: Partial<IUser>) {
 export async function generateRefreshToken(user: IUser) {
   const token = jwt.sign(
     { id: user.id, username: user.username },
-    process.env.REFRESH_TOKEN_SECRET!,
+    REFRESH_TOKEN_SECRET,
     { expiresIn: "7d" },
   );
 
@@ -29,7 +31,7 @@ export async function verifyRefreshToken(token: string) {
   if (!storedToken) return null;
 
   try {
-    return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET!);
+    return jwt.verify(token, REFRESH_TOKEN_SECRET);
   } catch (err) {
     return null;
   }

@@ -10,7 +10,7 @@ let mongoServer;
 let app;
 
 beforeAll(async () => {
-  process.env.JWT_SECRET = "mySuperSecretKey123!@#";
+  process.env.ACCESS_TOKEN_SECRET = "mySuperSecretKey123!@#";
   // start in-memory MongoDB
   mongoServer = await MongoMemoryServer.create();
   const uri = mongoServer.getUri();
@@ -54,6 +54,6 @@ describe("Auth Routes", async () => {
     await request(app).post("/api/auth/register").send(testUser);
     const res = await request(app).post("/api/auth/login").send(testUser);
     expect(res.status).toBe(200);
-    expect(res.body.token).toBeDefined();
+    expect(res.body.accessToken).toBeDefined();
   });
 });
