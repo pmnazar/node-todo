@@ -19,7 +19,7 @@
     {
       "label": "Backend",
       "type": "shell",
-      "command": "npx nodemon server.js",
+      "command": "npm run dev",
       "options": {
         "cwd": "${workspaceFolder}/backend"
       },
@@ -32,7 +32,7 @@
       }
     },
     {
-      "label": "/",
+      "label": "/frontend/todo",
       "type": "shell",
       "command": "exec $SHELL", // "cmd /k" on Windows
       "options": {
@@ -47,8 +47,23 @@
       }
     },
     {
+      "label": "/backend",
+      "type": "shell",
+      "command": "exec $SHELL", // "cmd /k" on Windows
+      "options": {
+        "cwd": "${workspaceFolder}/backend"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "panel": "new",
+        "reveal": "always",
+        "group": "terminal"
+      }
+    },
+    {
       "label": "Start Full Project",
-      "dependsOn": ["Angular", "Backend", "/"],
+      "dependsOn": ["Angular", "Backend", "/frontend/todo", "/backend"],
       "dependsOrder": "parallel",
       "problemMatcher": [],
       "group": {

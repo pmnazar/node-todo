@@ -40,7 +40,6 @@
     "@testing-library/jest-dom": "^6.8.0",
     "@types/jasmine": "~5.1.9",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.5.2",
     "autoprefixer": "^10.4.21",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
@@ -60,8 +59,6 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.13",
     "ts-jest": "^29.4.4",
-    "ts-node": "^10.9.2",
-    "typescript": "~5.9.2",
     "typescript-eslint": "^8.44.1"
   }
 }

@@ -5,10 +5,10 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
-import todoRoutes from "./routes/todosRoutes.js";
-import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import llmRoutes from "./routes/llmRoutes.js";
+import todoRoutes from "./routes/todosRoutes";
+import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
+import llmRoutes from "./routes/llmRoutes";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // MongoDB connection
-const uri = process.env.MONGO_URI;
+const uri: string = process.env.MONGO_URI || "";
 mongoose
   .connect(uri)
   .then(() => console.log("MongoDB connected"))

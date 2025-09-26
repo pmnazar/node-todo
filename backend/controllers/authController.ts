@@ -1,4 +1,4 @@
-import User from "../models/User.js";
+import User from "../models/User";
 import bcrypt from "bcryptjs";
 import {
   generateAccessToken,
@@ -6,23 +6,44 @@ import {
   revokeRefreshToken,
   verifyRefreshToken,
 } from "../services/tokenServices.js";
+import { Request, Response } from "express";
 const isProd = process.env.NODE_ENV === "production";
 
-export const registerUser = async (req, res) => {
+interface RegisterBody {
+  username: string;
+  email: string;
+  password: string;
+}
+interface LoginBody {
+  username: string;
+  password: string;
+}
+interface RefreshTokenPayload {
+  id: string;
+  username: string;
+}
+
+export const registerUser = async (
+  req: Request<{}, {}, RegisterBody>,
+  res: Response,
+) => {
   try {
     const { username, email, password } = req.body;
     const hashed = await bcrypt.hash(password, 10);
     const user = new User({ username, password: hashed, email });
     await user.save();
     res.json({ message: "User registered successfull" });
-  } catch (e) {
+  } catch (e: any) {
     res
       .status(500)
       .json({ message: "Error registering user", error: e.message });
   }
 };
 
-export const loginUser = async (req, res) => {
+export const loginUser = async (
+  req: Request<{}, {}, LoginBody>,
+  res: Response,
+) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -43,17 +64,19 @@ export const loginUser = async (req, res) => {
     });
 
     res.json({ accessToken });
-  } catch (e) {
+  } catch (e: any) {
     res.status(500).json({ message: "Login error", error: e.message });
   }
 };
 
-export const refreshToken = async (req, res) => {
+export const refreshToken = async (req: Request, res: Response) => {
   try {
     const token = req.cookies.refreshToken;
     if (!token || typeof token !== "string") return res.sendStatus(401);
 
-    const payload = await verifyRefreshToken(token);
+    const payload = (await verifyRefreshToken(
+      token,
+    )) as RefreshTokenPayload | null;
     if (!payload) return res.sendStatus(403);
 
     const accessToken = generateAccessToken({
@@ -61,12 +84,12 @@ export const refreshToken = async (req, res) => {
       username: payload.username,
     });
     res.json({ accessToken });
-  } catch (e) {
+  } catch (e: any) {
     res.status(500).json({ message: "Refresh token error", error: e.message });
   }
 };
 
-export const logoutUser = async (req, res) => {
+export const logoutUser = async (req: Request, res: Response) => {
   try {
     const token = req.cookies.refreshToken;
     if (token && typeof token === "string") {
@@ -80,7 +103,7 @@ export const logoutUser = async (req, res) => {
     });
 
     res.sendStatus(204);
-  } catch (e) {
+  } catch (e: any) {
     console.error(e);
     res.status(500).json({ message: "Logout error", error: e.message });
   }

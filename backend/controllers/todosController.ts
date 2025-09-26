@@ -1,12 +1,12 @@
-import Todo from "../models/Todo.js";
-import { parseLLMResponse } from "../utils/parseTodo.js";
+import Todo from "../models/Todo";
+import { Request, Response } from "express";
 
-export const getTodo = async (req, res) => {
-  const todos = await Todo.find({ user: req.user.id }).sort({ createdAt: 1 });
+export const getTodo = async (req: Request, res: Response) => {
+  const todos = await Todo.find({ user: req?.user?.id }).sort({ createdAt: 1 });
   res.json(todos);
 };
 
-export const createTodo = async (req, res) => {
+export const createTodo = async (req: Request, res: Response) => {
   if (!req.body.title)
     return res.status(400).json({ error: "Title is required" });
   if (!req.user || !req.user.id)
@@ -27,7 +27,7 @@ export const createTodo = async (req, res) => {
   }
 };
 
-export const editTodo = async (req, res) => {
+export const editTodo = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const { title, completed } = req.body;
@@ -44,7 +44,7 @@ export const editTodo = async (req, res) => {
   }
 };
 
-export const deleteTodo = async (req, res) => {
+export const deleteTodo = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     await Todo.findByIdAndDelete(id);

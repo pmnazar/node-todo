@@ -1,18 +1,19 @@
 import jwt from "jsonwebtoken";
 import RefreshToken from "../models/RefreshToken.js";
+import { IUser } from "../models/User.js";
 
-export function generateAccessToken(user) {
+export function generateAccessToken(user: Partial<IUser>) {
   return jwt.sign(
     { id: user.id, username: user.username },
-    process.env.ACCESS_TOKEN_SECRET,
+    process.env.ACCESS_TOKEN_SECRET!,
     { expiresIn: "10s" },
   );
 }
 
-export async function generateRefreshToken(user) {
+export async function generateRefreshToken(user: IUser) {
   const token = jwt.sign(
     { id: user.id, username: user.username },
-    process.env.REFRESH_TOKEN_SECRET,
+    process.env.REFRESH_TOKEN_SECRET!,
     { expiresIn: "7d" },
   );
 
@@ -23,17 +24,17 @@ export async function generateRefreshToken(user) {
   return token;
 }
 
-export async function verifyRefreshToken(token) {
+export async function verifyRefreshToken(token: string) {
   const storedToken = await RefreshToken.findOne({ token });
   if (!storedToken) return null;
 
   try {
-    return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+    return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET!);
   } catch (err) {
     return null;
   }
 }
 
-export async function revokeRefreshToken(token) {
+export async function revokeRefreshToken(token: string) {
   await RefreshToken.deleteOne({ token });
 }

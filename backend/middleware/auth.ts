@@ -1,21 +1,28 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import User from "../models/User";
+import { Request, Response, NextFunction } from "express";
 
-export async function authMiddleware(req, res, next) {
+export async function authMiddleware(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1]; // Bearer token
 
   if (!token) return res.status(401).json({ message: "No noken provided" });
 
   try {
-    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!) as {
+      id: string;
+    };
     const user = await User.findById(decoded.id).select("-password");
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
     req.user = user; // attach user info to request
     next();
-  } catch (e) {
+  } catch (e: any) {
     if (e.name === "TokenExpiredError") {
       return res.status(401).json({ message: "Token expired" });
     }
